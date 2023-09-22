@@ -16,10 +16,10 @@ type ReplicaManagerOptions = {
 }
 
 export class ReplicaManager {
-  private _replicaClients: PrismaClient[]
+  public readonly replicaClients: PrismaClient[]
 
   constructor({ replicaUrls, clientConstructor, configureCallback }: ReplicaManagerOptions) {
-    this._replicaClients = replicaUrls.map((datasourceUrl) => {
+    this.replicaClients = replicaUrls.map((datasourceUrl) => {
       const client = new clientConstructor({
         datasourceUrl,
       })
@@ -32,14 +32,14 @@ export class ReplicaManager {
   }
 
   async connectAll() {
-    await Promise.all(this._replicaClients.map((client) => client.$connect()))
+    await Promise.all(this.replicaClients.map((client) => client.$connect()))
   }
 
   async disconnectAll() {
-    await Promise.all(this._replicaClients.map((client) => client.$disconnect()))
+    await Promise.all(this.replicaClients.map((client) => client.$disconnect()))
   }
 
   pickReplica(): PrismaClient {
-    return this._replicaClients[Math.floor(Math.random() * this._replicaClients.length)]
+    return this.replicaClients[Math.floor(Math.random() * this.replicaClients.length)]
   }
 }
