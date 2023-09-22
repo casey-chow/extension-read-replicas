@@ -15,10 +15,10 @@ const readOperations = [
   'groupBy',
   'aggregate',
   'count',
-  'queryRaw',
-  'queryRawUnsafe',
-  'findRaw',
-  'aggregateRaw',
+  '$queryRaw',
+  '$queryRawUnsafe',
+  '$findRaw',
+  '$aggregateRaw',
 ]
 
 export const readReplicas = (options: ReplicasOptions, configureReplicaClient?: ConfigureReplicaCallback) =>
